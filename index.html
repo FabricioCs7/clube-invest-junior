@@ -1,0 +1,419 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#07111f">
+  <title>Clube Invest Júnior</title>
+  <style>
+    :root {
+      --bg: #07111f;
+      --panel: #101e30;
+      --panel2: #15263a;
+      --green: #38d996;
+      --text: #f3f7fc;
+      --muted: #9aabc0;
+      --border: #25374c;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Arial, sans-serif;
+    }
+
+    button, input { font: inherit; }
+
+    button { cursor: pointer; }
+
+    header {
+      padding: 18px 5%;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 800;
+      font-size: 19px;
+    }
+
+    .logo {
+      background: var(--green);
+      color: #07111f;
+      padding: 10px;
+      border-radius: 12px;
+      font-weight: 900;
+    }
+
+    .brand span:last-child { color: var(--green); }
+
+    .status {
+      color: #ffd479;
+      font-size: 12px;
+      background: #332b1b;
+      border-radius: 20px;
+      padding: 8px 12px;
+    }
+
+    main {
+      width: 92%;
+      max-width: 1150px;
+      margin: 28px auto;
+    }
+
+    .welcome {
+      margin-bottom: 24px;
+    }
+
+    h1 { font-size: clamp(25px, 5vw, 36px); margin: 0 0 8px; }
+    h2 { font-size: 19px; margin: 0 0 16px; }
+    p { color: var(--muted); line-height: 1.6; }
+    .green { color: var(--green); }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      margin: 22px 0;
+    }
+
+    .card, .section {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 20px;
+      min-width: 0;
+    }
+
+    .label { color: var(--muted); font-size: 13px; }
+    .value { font-size: clamp(20px, 4vw, 29px); font-weight: 800; margin-top: 12px; }
+    .small { font-size: 12px; color: var(--muted); margin-top: 9px; }
+
+    .tabs {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      margin: 24px 0 18px;
+      padding-bottom: 5px;
+    }
+
+    .tab {
+      border: 1px solid var(--border);
+      background: var(--panel);
+      color: var(--muted);
+      border-radius: 10px;
+      padding: 12px 16px;
+      white-space: nowrap;
+    }
+
+    .tab.active {
+      background: var(--green);
+      color: #07111f;
+      border-color: var(--green);
+      font-weight: bold;
+    }
+
+    .toolbar {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 15px;
+      flex-wrap: wrap;
+    }
+
+    input, select {
+      background: #091625;
+      color: var(--text);
+      border: 1px solid var(--border);
+      padding: 12px;
+      border-radius: 10px;
+      min-width: 0;
+    }
+
+    input { flex: 1; width: 150px; }
+
+    .table-wrap { overflow-x: auto; }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      min-width: 440px;
+    }
+
+    th, td {
+      padding: 14px 10px;
+      border-bottom: 1px solid var(--border);
+      font-size: 13px;
+    }
+
+    th { color: var(--muted); font-weight: normal; }
+
+    .symbol { font-weight: bold; }
+    .company { color: var(--muted); font-size: 11px; margin-top: 5px; }
+
+    .notice {
+      padding: 13px;
+      border-radius: 10px;
+      background: #292719;
+      border: 1px solid #51452a;
+      color: #f5dba1;
+      font-size: 12px;
+      line-height: 1.6;
+      margin-bottom: 18px;
+    }
+
+    .primary {
+      border: 0;
+      background: var(--green);
+      color: #07111f;
+      border-radius: 9px;
+      padding: 12px 16px;
+      font-weight: bold;
+    }
+
+    .secondary {
+      border: 1px solid var(--border);
+      background: var(--panel2);
+      color: var(--text);
+      border-radius: 9px;
+      padding: 10px 12px;
+    }
+
+    .empty {
+      text-align: center;
+      padding: 30px 10px;
+      color: var(--muted);
+    }
+
+    .hidden { display: none; }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 25px 5%;
+      text-align: center;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.8;
+    }
+
+    @media (max-width: 650px) {
+      .grid { grid-template-columns: 1fr; }
+      .card { padding: 17px; }
+      header { padding: 15px 4%; }
+      main { width: 94%; margin-top: 22px; }
+      .section { padding: 14px; }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <div class="brand">
+      <span class="logo">CI</span>
+      <span>Clube Invest <span>Júnior</span></span>
+    </div>
+    <div class="status">● MODO DE DEMONSTRAÇÃO</div>
+  </header>
+
+  <main>
+    <div class="welcome">
+      <h1>Aprenda a investir. <span class="green">Compita.</span></h1>
+      <p>Um clube de educação financeira para aprender sobre o mercado de ações com dinheiro virtual.</p>
+    </div>
+
+    <div class="notice">
+      Esta é uma versão inicial de demonstração. O saldo abaixo é ilustrativo.
+      Ainda não há login, operações reais de simulação salvas, cotações conectadas
+      nem ranking compartilhado.
+    </div>
+
+    <div class="grid">
+      <div class="card">
+        <div class="label">Saldo virtual inicial</div>
+        <div class="value">R$ 1.000,00</div>
+        <div class="small">Valor ilustrativo por enquanto</div>
+      </div>
+
+      <div class="card">
+        <div class="label">Patrimônio total</div>
+        <div class="value">R$ 1.000,00</div>
+        <div class="small">Aguardando integração das operações</div>
+      </div>
+
+      <div class="card">
+        <div class="label">Resultado do mês</div>
+        <div class="value">R$ 0,00</div>
+        <div class="small">Nenhuma operação registrada</div>
+      </div>
+    </div>
+
+    <div class="tabs">
+      <button class="tab active" data-page="market">Mercado</button>
+      <button class="tab" data-page="portfolio">Minha carteira</button>
+      <button class="tab" data-page="ranking">Ranking</button>
+      <button class="tab" data-page="account">Minha conta</button>
+    </div>
+
+    <section id="market" class="section">
+      <h2>Mercado de ações</h2>
+      <p>Pesquise empresas brasileiras e americanas por seus códigos de negociação.</p>
+
+      <div class="toolbar">
+        <input id="search" type="search" placeholder="Buscar código ou empresa...">
+        <select id="exchange">
+          <option value="all">Todas as bolsas</option>
+          <option value="BR">Brasil · B3</option>
+          <option value="US">Estados Unidos</option>
+        </select>
+      </div>
+
+      <div class="notice">
+        As empresas abaixo são reais. Os preços não foram preenchidos porque
+        ainda precisamos conectar uma fonte de cotações confiável.
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Ativo</th>
+              <th>Mercado</th>
+              <th>Cotação</th>
+              <th>Disponibilidade</th>
+            </tr>
+          </thead>
+          <tbody id="assets"></tbody>
+        </table>
+      </div>
+      <div id="assetCount" class="small"></div>
+    </section>
+
+    <section id="portfolio" class="section hidden">
+      <h2>Minha carteira</h2>
+      <div class="empty">
+        <p>Você ainda não tem operações registradas.</p>
+        <p>As compras e vendas serão habilitadas depois da conexão segura com o Supabase e com as cotações.</p>
+        <button class="primary" onclick="showPage('market')">Explorar ativos</button>
+      </div>
+    </section>
+
+    <section id="ranking" class="section hidden">
+      <h2>Ranking do clube</h2>
+      <div class="empty">
+        <p>O ranking compartilhado será exibido quando as contas e os resultados estiverem conectados ao banco de dados.</p>
+      </div>
+    </section>
+
+    <section id="account" class="section hidden">
+      <h2>Minha conta</h2>
+      <p>O cadastro e o login ainda não estão conectados.</p>
+      <p>Vamos aproveitar o Supabase existente para preparar essa parte sem criar outro banco.</p>
+    </section>
+  </main>
+
+  <footer>
+    Clube Invest Júnior · Educação financeira para jovens<br>
+    Simulação educativa. Nenhuma compra ou venda real de ativos é realizada.
+  </footer>
+
+  <script>
+    const assets = [
+      {symbol:"PETR4", name:"Petrobras", market:"BR"},
+      {symbol:"VALE3", name:"Vale", market:"BR"},
+      {symbol:"ITUB4", name:"Itaú Unibanco", market:"BR"},
+      {symbol:"BBDC4", name:"Bradesco", market:"BR"},
+      {symbol:"BBAS3", name:"Banco do Brasil", market:"BR"},
+      {symbol:"WEGE3", name:"WEG", market:"BR"},
+      {symbol:"ABEV3", name:"Ambev", market:"BR"},
+      {symbol:"B3SA3", name:"B3", market:"BR"},
+      {symbol:"RENT3", name:"Localiza", market:"BR"},
+      {symbol:"SUZB3", name:"Suzano", market:"BR"},
+      {symbol:"AAPL", name:"Apple", market:"US"},
+      {symbol:"MSFT", name:"Microsoft", market:"US"},
+      {symbol:"NVDA", name:"NVIDIA", market:"US"},
+      {symbol:"AMZN", name:"Amazon", market:"US"},
+      {symbol:"GOOGL", name:"Alphabet", market:"US"},
+      {symbol:"META", name:"Meta Platforms", market:"US"},
+      {symbol:"TSLA", name:"Tesla", market:"US"},
+      {symbol:"WMT", name:"Walmart", market:"US"},
+      {symbol:"KO", name:"Coca-Cola", market:"US"},
+      {symbol:"DIS", name:"Walt Disney", market:"US"}
+    ];
+
+    const tbody = document.getElementById("assets");
+    const search = document.getElementById("search");
+    const exchange = document.getElementById("exchange");
+
+    function renderAssets() {
+      const query = search.value.toLowerCase().trim();
+      const market = exchange.value;
+
+      const filtered = assets.filter(asset =>
+        (market === "all" || asset.market === market) &&
+        (asset.symbol.toLowerCase().includes(query) ||
+         asset.name.toLowerCase().includes(query))
+      );
+
+      tbody.innerHTML = "";
+
+      filtered.forEach(asset => {
+        const tr = document.createElement("tr");
+        const tdAsset = document.createElement("td");
+        const symbol = document.createElement("div");
+        const name = document.createElement("div");
+
+        symbol.className = "symbol";
+        symbol.textContent = asset.symbol;
+        name.className = "company";
+        name.textContent = asset.name;
+        tdAsset.append(symbol, name);
+
+        const tdMarket = document.createElement("td");
+        tdMarket.textContent = asset.market === "BR" ? "Brasil · B3" : "EUA";
+
+        const tdPrice = document.createElement("td");
+        tdPrice.textContent = "Não conectado";
+
+        const tdStatus = document.createElement("td");
+        tdStatus.textContent = "Aguardando cotação";
+
+        tr.append(tdAsset, tdMarket, tdPrice, tdStatus);
+        tbody.appendChild(tr);
+      });
+
+      document.getElementById("assetCount").textContent =
+        filtered.length + " ativos exibidos nesta lista inicial. A lista completa será integrada depois.";
+    }
+
+    function showPage(page) {
+      document.querySelectorAll("main section").forEach(section => {
+        section.classList.toggle("hidden", section.id !== page);
+      });
+
+      document.querySelectorAll(".tab").forEach(tab => {
+        tab.classList.toggle("active", tab.dataset.page === page);
+      });
+    }
+
+    document.querySelectorAll(".tab").forEach(tab => {
+      tab.addEventListener("click", () => showPage(tab.dataset.page));
+    });
+
+    search.addEventListener("input", renderAssets);
+    exchange.addEventListener("change", renderAssets);
+
+    renderAssets();
+  </script>
+</body>
+</html>
