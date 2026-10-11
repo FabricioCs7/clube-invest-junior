@@ -441,5 +441,39 @@
 
   console.log('Supabase conectado ao site!');
 </script>
+<div id="cadastro-clube" style="max-width:360px;margin:24px auto;padding:20px;background:#1e293b;color:white;border-radius:14px;font-family:Arial,sans-serif">
+  <h2 style="margin-top:0">Entrar no Clube</h2>
+  <input id="email-clube" type="email" placeholder="Seu e-mail" style="width:100%;box-sizing:border-box;padding:12px;margin:8px 0;border-radius:8px">
+  <input id="senha-clube" type="password" placeholder="Crie uma senha" style="width:100%;box-sizing:border-box;padding:12px;margin:8px 0;border-radius:8px">
+  <button id="btn-cadastro-clube" style="width:100%;padding:12px;margin-top:8px;border:0;border-radius:8px;background:#22c55e;color:#052e16;font-weight:bold">Criar conta</button>
+  <p id="mensagem-clube"></p>
+</div><script>
+document.getElementById('btn-cadastro-clube').addEventListener('click', async function () {
+  const email = document.getElementById('email-clube').value.trim();
+  const senha = document.getElementById('senha-clube').value;
+  const mensagem = document.getElementById('mensagem-clube');
+
+  if (!email || !senha) {
+    mensagem.textContent = 'Preencha o e-mail e a senha.';
+    return;
+  }
+
+  if (senha.length < 6) {
+    mensagem.textContent = 'A senha precisa ter pelo menos 6 caracteres.';
+    return;
+  }
+
+  mensagem.textContent = 'Criando sua conta...';
+
+  const { data, error } = await supabaseClient.auth.signUp({
+    email: email,
+    password: senha
+  });
+
+  mensagem.textContent = error
+    ? 'Erro: ' + error.message
+    : 'Cadastro enviado! Confira seu e-mail se for solicitada confirmação.';
+});
+</script>
 </body>
 </html>
