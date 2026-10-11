@@ -415,5 +415,19 @@
 
     renderAssets();
   </script>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+  const SUPABASE_URL = 'https://fpbnbmieqwjxozhhndvv.supabase.co';
+  const SUPABASE_KEY = 'sb_publishable_zBfaTBnIiodCGT8bZA2jNA_m4Ko317t';
+
+  const supabaseClient = window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+  );
+
+  console.log('Cliente Supabase preparado!');
+</script>
+
 </body>
 </html>
