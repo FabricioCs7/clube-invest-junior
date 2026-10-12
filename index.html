@@ -754,6 +754,62 @@ async function carregarRodadasAdmin() {
     status.textContent = 'Status: ' + rodada.status;
     cartao.appendChild(status);
 
+    const botaoRanking = document.createElement('button');
+    botaoRanking.textContent = 'Ver ranking';
+    botaoRanking.style.cssText =
+      'padding:10px 16px;margin-top:8px;border:0;' +
+      'border-radius:8px;background:#38bdf8;color:#082f49;' +
+      'font-weight:bold;';
+
+    botaoRanking.addEventListener('click', async function () {
+      botaoRanking.disabled = true;
+      botaoRanking.textContent = 'Carregando...';
+
+      try {
+        const { data: ranking, error: erroRanking } =
+          await supabaseClient.rpc('ranking_rodada', {
+            p_rodada_id: rodada.id
+          });
+
+        if (erroRanking) throw erroRanking;
+
+        const resultado = document.createElement('pre');
+        resultado.style.cssText =
+          'white-space:pre-wrap;overflow-wrap:anywhere;' +
+          'color:white;margin-top:12px;';
+
+        resultado.textContent = !ranking || ranking.length === 0
+          ? 'Ainda não há participantes nesta rodada.'
+          : ranking.map(function (p, i) {
+              return (i + 1) + 'º ' + p.username +
+                '\nPatrimônio: R$ ' +
+                Number(p.patrimonio_total).toLocaleString('pt-BR', {
+                  minimumFractionDigits: 2
+                }) +
+                '\nResultado: R$ ' +
+                Number(p.lucro_prejuizo).toLocaleString('pt-BR', {
+                  minimumFractionDigits: 2
+                }) +
+                '\nRentabilidade: ' +
+                Number(p.rentabilidade_percentual).toLocaleString('pt-BR') +
+                '%';
+            }).join('\n\n');
+
+        const anterior = cartao.querySelector('.resultado-ranking');
+        if (anterior) anterior.remove();
+
+        resultado.className = 'resultado-ranking';
+        cartao.appendChild(resultado);
+      } catch (erro) {
+        alert('Não foi possível carregar o ranking: ' + erro.message);
+      } finally {
+        botaoRanking.disabled = false;
+        botaoRanking.textContent = 'Ver ranking';
+      }
+    });
+
+    cartao.appendChild(botaoRanking);
+
     lista.appendChild(cartao);
   });
 }
