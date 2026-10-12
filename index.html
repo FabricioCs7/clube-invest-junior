@@ -475,5 +475,81 @@ document.getElementById('btn-cadastro-clube').addEventListener('click', async fu
     : 'Cadastro enviado! Confira seu e-mail se for solicitada confirmação.';
 });
 </script>
+<script>
+(async function() {
+  const formulario = document.getElementById('cadastro-clube');
+  const botaoCadastro = document.getElementById('btn-cadastro-clube');
+
+  if (!formulario || !botaoCadastro) {
+    alert('Não encontrei o formulário de cadastro.');
+    return;
+  }
+
+  const botaoLogin = document.createElement('button');
+  botaoLogin.textContent = 'Entrar na minha conta';
+  botaoLogin.style.cssText =
+    'width:100%;padding:12px;margin-top:10px;border:0;border-radius:8px;background:#3b82f6;color:white;font-weight:bold';
+
+  const botaoSair = document.createElement('button');
+  botaoSair.textContent = 'Sair da conta';
+  botaoSair.style.cssText = botaoLogin.style.cssText;
+  botaoSair.hidden = true;
+
+  formulario.appendChild(botaoLogin);
+  formulario.appendChild(botaoSair);
+
+  const email = document.getElementById('email-clube');
+  const senha = document.getElementById('senha-clube');
+  const mensagem = document.getElementById('mensagem-clube');
+
+  botaoLogin.onclick = async function() {
+    if (!email.value.trim() || !senha.value) {
+      mensagem.textContent = 'Digite seu e-mail e sua senha.';
+      return;
+    }
+
+    mensagem.textContent = 'Entrando...';
+
+    const { error } = await supabaseClient.auth.signInWithPassword({
+      email: email.value.trim(),
+      password: senha.value
+    });
+
+    if (error) {
+      mensagem.textContent = 'Erro ao entrar: ' + error.message;
+      return;
+    }
+
+    mensagem.textContent = 'Login realizado com sucesso!';
+    botaoLogin.hidden = true;
+    botaoCadastro.hidden = true;
+    botaoSair.hidden = false;
+  };
+
+  botaoSair.onclick = async function() {
+    const { error } = await supabaseClient.auth.signOut();
+
+    if (error) {
+      mensagem.textContent = 'Não foi possível sair da conta.';
+      return;
+    }
+
+    mensagem.textContent = 'Você saiu da sua conta.';
+    botaoLogin.hidden = false;
+    botaoCadastro.hidden = false;
+    botaoSair.hidden = true;
+  };
+
+  const { data } = await supabaseClient.auth.getSession();
+
+  if (data.session) {
+    mensagem.textContent = 'Você já está conectado!';
+    botaoLogin.hidden = true;
+    botaoCadastro.hidden = true;
+    botaoSair.hidden = false;
+  }
+})();
+</script>
+  
 </body>
 </html>
