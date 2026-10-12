@@ -606,5 +606,90 @@ async function carregarSaldoClube() {
 carregarSaldoClube();
   </script>
   
+<section id="painel-admin-clube" style="display:none;max-width:600px;margin:24px auto;padding:20px;background:#1e293b;color:white;border-radius:14px;font-family:Arial,sans-serif">
+  <h2 style="margin-top:0">Painel do administrador</h2>
+  <p>Configure o orçamento virtual de cada rodada mensal.</p>
+
+  <label for="admin-nome-rodada">Nome da rodada</label>
+  <input id="admin-nome-rodada" type="text" placeholder="Ex.: Rodada de novembro" style="width:100%;box-sizing:border-box;padding:12px;margin:8px 0 14px;border-radius:8px">
+
+  <label for="admin-inicio-rodada">Data de início</label>
+  <input id="admin-inicio-rodada" type="date" style="width:100%;box-sizing:border-box;padding:12px;margin:8px 0 14px;border-radius:8px">
+
+  <label for="admin-fim-rodada">Data de encerramento</label>
+  <input id="admin-fim-rodada" type="date" style="width:100%;box-sizing:border-box;padding:12px;margin:8px 0 14px;border-radius:8px">
+
+  <label for="admin-orcamento-rodada">Orçamento virtual por participante (R$)</label>
+  <input id="admin-orcamento-rodada" type="number" min="0.01" step="0.01" placeholder="Ex.: 5000" style="width:100%;box-sizing:border-box;padding:12px;margin:8px 0 14px;border-radius:8px">
+
+  <button id="admin-criar-rodada" type="button" style="width:100%;padding:13px;background:#22c55e;color:#052e16;border:0;border-radius:8px;font-weight:bold">Criar rodada em rascunho</button>
+
+  <p id="admin-mensagem-rodada" role="status"></p>
+</section>
+
+<script>
+(async function iniciarPainelAdmin() {
+  const painel = document.getElementById('painel-admin-clube');
+  const mensagem = document.getElementById('admin-mensagem-rodada');
+  const botao = document.getElementById('admin-criar-rodada');
+
+  const { data, error } = await supabaseClient.auth.getSession();
+
+  if (error || !data.session) return;
+
+  const { data: perfil, error: erroPerfil } = await supabaseClient
+    .from('profiles')
+    .select('role')
+    .eq('id', data.session.user.id)
+    .single();
+
+  if (erroPerfil || perfil?.role !== 'admin') return;
+
+  painel.style.display = 'block';
+
+  botao.addEventListener('click', async function () {
+    const nome = document.getElementById('admin-nome-rodada').value.trim();
+    const inicio = document.getElementById('admin-inicio-rodada').value;
+    const fim = document.getElementById('admin-fim-rodada').value;
+    const orcamento = Number(document.getElementById('admin-orcamento-rodada').value);
+
+    if (!nome || !inicio || !fim || !Number.isFinite(orcamento) || orcamento <= 0) {
+      mensagem.textContent = 'Preencha todos os campos com valores válidos.';
+      return;
+    }
+
+    if (fim < inicio) {
+      mensagem.textContent = 'A data final deve ser igual ou posterior à inicial.';
+      return;
+    }
+
+    botao.disabled = true;
+    mensagem.textContent = 'Criando rodada...';
+
+    try {
+      const { data: resultado, error: erro } = await supabaseClient.rpc(
+        'criar_rodada_mensal',
+        {
+          p_nome: nome,
+          p_inicio: inicio,
+          p_fim: fim,
+          p_orcamento: orcamento
+        }
+      );
+
+      if (erro) throw erro;
+
+      mensagem.textContent =
+        'Rascunho criado! Identificador: ' + resultado +
+        '. A rodada ainda não está ativa.';
+    } catch (erro) {
+      mensagem.textContent = 'Não foi possível criar: ' + erro.message;
+    } finally {
+      botao.disabled = false;
+    }
+  });
+})();
+</script>
+
 </body>
 </html>
