@@ -625,6 +625,12 @@ carregarSaldoClube();
   <button id="admin-criar-rodada" type="button" style="width:100%;padding:13px;background:#22c55e;color:#052e16;border:0;border-radius:8px;font-weight:bold">Criar rodada em rascunho</button>
 
   <p id="admin-mensagem-rodada" role="status"></p>
+  
+<div id="admin-lista-rodadas" style="margin-top:20px">
+  <h3>Rodadas do Clube</h3>
+  <p>Carregando rodadas...</p>
+</div>
+
 </section>
 
 <script>
@@ -689,6 +695,70 @@ carregarSaldoClube();
     }
   });
 })();
+</script>
+
+<script>
+async function carregarRodadasAdmin() {
+  const lista = document.getElementById('admin-lista-rodadas');
+  if (!lista) return;
+
+  const { data, error } = await supabaseClient
+    .from('monthly_rounds')
+    .select('id, name, start_date, end_date, starting_budget, status')
+    .order('created_at', { ascending: false });
+
+  lista.replaceChildren();
+
+  const titulo = document.createElement('h3');
+  titulo.textContent = 'Rodadas do Clube';
+  lista.appendChild(titulo);
+
+  if (error) {
+    const aviso = document.createElement('p');
+    aviso.textContent = 'Erro ao carregar rodadas: ' + error.message;
+    lista.appendChild(aviso);
+    return;
+  }
+
+  if (!data || data.length === 0) {
+    const aviso = document.createElement('p');
+    aviso.textContent = 'Nenhuma rodada encontrada.';
+    lista.appendChild(aviso);
+    return;
+  }
+
+  data.forEach(function (rodada) {
+    const cartao = document.createElement('div');
+    cartao.style.cssText =
+      'margin:12px 0;padding:14px;background:#0f172a;' +
+      'border-radius:10px;overflow-wrap:anywhere';
+
+    const nome = document.createElement('h4');
+    nome.textContent = rodada.name;
+    cartao.appendChild(nome);
+
+    const orcamento = document.createElement('p');
+    orcamento.textContent = 'Orçamento por participante: ' +
+      Number(rodada.starting_budget).toLocaleString('pt-BR', {
+        style: 'currency',
+        currency: 'BRL'
+      });
+    cartao.appendChild(orcamento);
+
+    const datas = document.createElement('p');
+    datas.textContent =
+      'Período: ' + rodada.start_date + ' até ' + rodada.end_date;
+    cartao.appendChild(datas);
+
+    const status = document.createElement('p');
+    status.textContent = 'Status: ' + rodada.status;
+    cartao.appendChild(status);
+
+    lista.appendChild(cartao);
+  });
+}
+
+carregarRodadasAdmin();
 </script>
 
 </body>
