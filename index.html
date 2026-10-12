@@ -550,6 +550,61 @@ document.getElementById('btn-cadastro-clube').addEventListener('click', async fu
   }
 })();
 </script>
+  <script>
+async function carregarSaldoClube() {
+  const mensagem = document.getElementById('mensagem-clube');
+
+  const { data: sessaoData, error: sessaoErro } =
+    await supabaseClient.auth.getSession();
+
+  if (sessaoErro || !sessaoData.session) {
+    mensagem.textContent = 'Entre na sua conta para consultar seu saldo.';
+    return;
+  }
+
+  const usuario = sessaoData.session.user;
+
+  const { data: perfil, error } = await supabaseClient
+    .from('profiles')
+    .select('*')
+    .eq('id', usuario.id)
+    .single();
+
+  if (error || !perfil) {
+    mensagem.textContent = 'Não foi possível carregar seu saldo.';
+    return;
+  }
+
+  let saldo = perfil.virtual_balance;
+
+  if (saldo === undefined) {
+    saldo = perfil['Virtual Balance'];
+  }
+
+  if (saldo === undefined) {
+    mensagem.textContent = 'Não encontrei a coluna do saldo.';
+    return;
+  }
+
+  let painel = document.getElementById('saldo-real-clube');
+
+  if (!painel) {
+    painel = document.createElement('div');
+    painel.id = 'saldo-real-clube';
+    painel.style.cssText =
+      'margin-top:16px;padding:16px;background:#0f172a;color:white;border-radius:12px;text-align:center;font-family:Arial,sans-serif';
+    document.getElementById('cadastro-clube').appendChild(painel);
+  }
+
+  painel.textContent = 'Seu saldo virtual: ' +
+    Number(saldo).toLocaleString('pt-BR', {
+      style: 'currency',
+      currency: 'BRL'
+    });
+}
+
+carregarSaldoClube();
+  </script>
   
 </body>
 </html>
