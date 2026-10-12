@@ -808,6 +808,16 @@ async function carregarRodadasAdmin() {
       }
     });
 
+const botaoAtivar = document.createElement('button');
+botaoAtivar.textContent = 'Ativar rodada';
+botaoAtivar.style.marginLeft = '8px';
+
+botaoAtivar.addEventListener('click', async function () {
+  alert('A ativação será liberada depois dos testes de segurança. Nenhuma rodada foi iniciada.');
+});
+
+cartao.appendChild(botaoAtivar);
+
     cartao.appendChild(botaoRanking);
 
     lista.appendChild(cartao);
