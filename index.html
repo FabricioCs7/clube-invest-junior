@@ -3,877 +3,669 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#07111f">
   <title>Clube Invest Júnior</title>
-
   <style>
     :root {
-      --bg: #07111f;
-      --panel: #101e30;
-      --panel2: #15263a;
-      --green: #38d996;
-      --text: #f3f7fc;
-      --muted: #9aabc0;
-      --border: #25374c;
+      --bg:#07111f; --panel:#101e30; --panel2:#15263a;
+      --green:#38d996; --text:#f3f7fc; --muted:#9aabc0;
+      --border:#25374c;
     }
-
-    * { box-sizing: border-box; }
-
+    * { box-sizing:border-box; }
     body {
-      margin: 0;
-      background: var(--bg);
-      color: var(--text);
-      font-family: Arial, sans-serif;
+      margin:0; background:var(--bg); color:var(--text);
+      font-family:Arial,sans-serif;
     }
-
-    button, input, select { font: inherit; }
-    button { cursor: pointer; }
-
+    button,input,select { font:inherit; }
+    button { cursor:pointer; }
     header {
-      padding: 18px 5%;
-      border-bottom: 1px solid var(--border);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 15px;
-      flex-wrap: wrap;
+      padding:18px 5%; border-bottom:1px solid var(--border);
+      display:flex; align-items:center; justify-content:space-between;
+      gap:15px; flex-wrap:wrap;
     }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-weight: 800;
-      font-size: 19px;
+    .brand { display:flex; align-items:center; gap:10px; font-weight:800; font-size:19px; }
+    .logo { background:var(--green); color:#07111f; padding:10px; border-radius:12px; }
+    .brand span:last-child { color:var(--green); }
+    .status { color:#ffd479; font-size:12px; background:#332b1b; border-radius:20px; padding:8px 12px; }
+    main { width:92%; max-width:1150px; margin:28px auto; }
+    .welcome { margin-bottom:24px; }
+    h1 { font-size:clamp(25px,5vw,36px); margin:0 0 8px; }
+    h2 { font-size:19px; margin:0 0 16px; }
+    p { color:var(--muted); line-height:1.6; }
+    .green { color:var(--green); }
+    .grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:14px; margin:22px 0; }
+    .card,.section {
+      background:var(--panel); border:1px solid var(--border);
+      border-radius:16px; padding:20px; min-width:0;
     }
-
-    .logo {
-      background: var(--green);
-      color: #07111f;
-      padding: 10px;
-      border-radius: 12px;
-      font-weight: 900;
-    }
-
-    .brand span:last-child { color: var(--green); }
-
-    .status {
-      color: #ffd479;
-      font-size: 12px;
-      background: #332b1b;
-      border-radius: 20px;
-      padding: 8px 12px;
-    }
-
-    main {
-      width: 92%;
-      max-width: 1150px;
-      margin: 28px auto;
-    }
-
-    .welcome { margin-bottom: 24px; }
-
-    h1 { font-size: clamp(25px, 5vw, 36px); margin: 0 0 8px; }
-    h2 { font-size: 19px; margin: 0 0 16px; }
-    p { color: var(--muted); line-height: 1.6; }
-    .green { color: var(--green); }
-
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 14px;
-      margin: 22px 0;
-    }
-
-    .card, .section {
-      background: var(--panel);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 20px;
-      min-width: 0;
-    }
-
-    .label { color: var(--muted); font-size: 13px; }
-    .value { font-size: clamp(20px, 4vw, 29px); font-weight: 800; margin-top: 12px; }
-    .small { font-size: 12px; color: var(--muted); margin-top: 9px; }
-
-    .tabs {
-      display: flex;
-      gap: 8px;
-      overflow-x: auto;
-      margin: 24px 0 18px;
-      padding-bottom: 5px;
-    }
-
-    .tab {
-      border: 1px solid var(--border);
-      background: var(--panel);
-      color: var(--muted);
-      border-radius: 10px;
-      padding: 12px 16px;
-      white-space: nowrap;
-    }
-
-    .tab.active {
-      background: var(--green);
-      color: #07111f;
-      border-color: var(--green);
-      font-weight: bold;
-    }
-
-    .toolbar {
-      display: flex;
-      gap: 10px;
-      margin-bottom: 15px;
-      flex-wrap: wrap;
-    }
-
-    input, select {
-      background: #091625;
-      color: var(--text);
-      border: 1px solid var(--border);
-      padding: 12px;
-      border-radius: 10px;
-      min-width: 0;
-    }
-
-    input { flex: 1; width: 150px; }
-
-    .table-wrap { overflow-x: auto; }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      text-align: left;
-      min-width: 440px;
-    }
-
-    th, td {
-      padding: 14px 10px;
-      border-bottom: 1px solid var(--border);
-      font-size: 13px;
-    }
-
-    th { color: var(--muted); font-weight: normal; }
-    .symbol { font-weight: bold; }
-    .company { color: var(--muted); font-size: 11px; margin-top: 5px; }
-
-    .notice {
-      padding: 13px;
-      border-radius: 10px;
-      background: #292719;
-      border: 1px solid #51452a;
-      color: #f5dba1;
-      font-size: 12px;
-      line-height: 1.6;
-      margin-bottom: 18px;
-    }
-
-    .primary, .secondary {
-      border-radius: 9px;
-      padding: 12px 16px;
-      font-weight: bold;
-    }
-
-    .primary {
-      border: 0;
-      background: var(--green);
-      color: #07111f;
-    }
-
-    .secondary {
-      border: 1px solid var(--border);
-      background: var(--panel2);
-      color: var(--text);
-    }
-
-    .empty {
-      text-align: center;
-      padding: 30px 10px;
-      color: var(--muted);
-    }
-
-    .hidden { display: none; }
-
-    footer {
-      border-top: 1px solid var(--border);
-      padding: 25px 5%;
-      text-align: center;
-      color: var(--muted);
-      font-size: 12px;
-      line-height: 1.8;
-    }
-
-    .account-box, .admin-box {
-      max-width: 600px;
-      margin: 24px auto;
-      padding: 20px;
-      background: var(--panel);
-      color: var(--text);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-    }
-
-    .account-box input, .admin-box input {
-      display: block;
-      width: 100%;
-      margin: 8px 0 14px;
-    }
-
-    .account-box button, .admin-box > button {
-      margin: 5px 0;
-    }
-
-    .round-card {
-      margin: 12px 0;
-      padding: 14px;
-      background: #0f172a;
-      border-radius: 10px;
-      overflow-wrap: anywhere;
-    }
-
-    @media (max-width: 650px) {
-      .grid { grid-template-columns: 1fr; }
-      .card { padding: 17px; }
-      header { padding: 15px 4%; }
-      main { width: 94%; margin-top: 22px; }
-      .section { padding: 14px; }
+    .label { color:var(--muted); font-size:13px; }
+    .value { font-size:clamp(20px,4vw,29px); font-weight:800; margin-top:12px; }
+    .small { font-size:12px; color:var(--muted); margin-top:9px; }
+    .tabs { display:flex; gap:8px; overflow-x:auto; margin:24px 0 18px; padding-bottom:5px; }
+    .tab { border:1px solid var(--border); background:var(--panel); color:var(--muted); border-radius:10px; padding:12px 16px; white-space:nowrap; }
+    .tab.active { background:var(--green); color:#07111f; border-color:var(--green); font-weight:bold; }
+    .toolbar { display:flex; gap:10px; margin-bottom:15px; flex-wrap:wrap; }
+    input,select { background:#091625; color:var(--text); border:1px solid var(--border); padding:12px; border-radius:10px; min-width:0; }
+    input { flex:1; width:150px; }
+    .table-wrap { overflow-x:auto; }
+    table { width:100%; border-collapse:collapse; text-align:left; min-width:440px; }
+    th,td { padding:14px 10px; border-bottom:1px solid var(--border); font-size:13px; }
+    th { color:var(--muted); font-weight:normal; }
+    .symbol { font-weight:bold; }
+    .company { color:var(--muted); font-size:11px; margin-top:5px; }
+    .notice { padding:13px; border-radius:10px; background:#292719; border:1px solid #51452a; color:#f5dba1; font-size:12px; line-height:1.6; margin-bottom:18px; }
+    .primary,.secondary { border-radius:9px; padding:12px 16px; font-weight:bold; }
+    .primary { border:0; background:var(--green); color:#07111f; }
+    .secondary { border:1px solid var(--border); background:var(--panel2); color:var(--text); }
+    button:disabled { opacity:.55; cursor:wait; }
+    .empty { text-align:center; padding:30px 10px; color:var(--muted); }
+    .hidden { display:none !important; }
+    footer { border-top:1px solid var(--border); padding:25px 5%; text-align:center; color:var(--muted); font-size:12px; line-height:1.8; }
+    .account-box,.admin-box { max-width:600px; margin:24px auto; padding:20px; background:var(--panel); border:1px solid var(--border); border-radius:14px; }
+    .account-box input,.admin-box input { display:block; width:100%; margin:8px 0 14px; }
+    .account-box button,.admin-box > button { margin:5px 0; }
+    .round-card { margin:12px 0; padding:14px; background:#0f172a; border-radius:10px; overflow-wrap:anywhere; }
+    @media(max-width:650px) {
+      .grid { grid-template-columns:1fr; }
+      .card { padding:17px; }
+      header { padding:15px 4%; }
+      main { width:94%; margin-top:22px; }
+      .section { padding:14px; }
     }
   </style>
 </head>
-
 <body>
-  <header>
-    <div class="brand">
-      <span class="logo">CI</span>
-      <span>Clube Invest <span>Júnior</span></span>
+<header>
+  <div class="brand">
+    <span class="logo">CI</span>
+    <span>Clube Invest <span>Júnior</span></span>
+  </div>
+  <div class="status">SIMULADOR EDUCATIVO</div>
+</header>
+
+<main>
+  <div class="welcome">
+    <h1>Aprenda a investir. <span class="green">Compita.</span></h1>
+    <p>Um clube de educação financeira para aprender sobre o mercado de ações com dinheiro virtual.</p>
+  </div>
+
+  <div class="grid">
+    <div class="card">
+      <div class="label">Saldo virtual</div>
+      <div class="value" id="saldo-resumo">Consulte sua conta</div>
+      <div class="small">Saldo do seu perfil. O saldo da rodada pode ser diferente.</div>
     </div>
-    <div class="status">SIMULADOR EDUCATIVO</div>
-  </header>
-
-  <main>
-    <div class="welcome">
-      <h1>Aprenda a investir. <span class="green">Compita.</span></h1>
-      <p>Um clube de educação financeira para aprender sobre o mercado de ações com dinheiro virtual.</p>
+    <div class="card">
+      <div class="label">Patrimônio total</div>
+      <div class="value">—</div>
+      <div class="small">Cálculo da carteira ainda não conectado.</div>
     </div>
-
-    <div class="grid">
-      <div class="card">
-        <div class="label">Saldo virtual</div>
-        <div class="value" id="saldo-resumo">Consulte sua conta</div>
-        <div class="small">Saldo da sua participação na rodada ativa, quando disponível.</div>
-      </div>
-
-      <div class="card">
-        <div class="label">Patrimônio total</div>
-        <div class="value">—</div>
-        <div class="small">Será conectado ao cálculo da carteira.</div>
-      </div>
-
-      <div class="card">
-        <div class="label">Resultado do mês</div>
-        <div class="value">—</div>
-        <div class="small">Será conectado ao cálculo da rodada.</div>
-      </div>
+    <div class="card">
+      <div class="label">Resultado do mês</div>
+      <div class="value">—</div>
+      <div class="small">Cálculo da rodada ainda não conectado.</div>
     </div>
+  </div>
 
-    <div class="tabs">
-      <button class="tab active" data-page="market">Mercado</button>
-      <button class="tab" data-page="portfolio">Minha carteira</button>
-      <button class="tab" data-page="ranking">Ranking</button>
-      <button class="tab" data-page="account">Minha conta</button>
+  <div class="tabs">
+    <button class="tab active" data-page="market">Mercado</button>
+    <button class="tab" data-page="portfolio">Minha carteira</button>
+    <button class="tab" data-page="ranking">Ranking</button>
+    <button class="tab" data-page="account">Minha conta</button>
+  </div>
+
+  <section id="market" class="section">
+    <h2>Mercado de ações</h2>
+    <p>Pesquise ativos pelo código ou nome. Os preços exibidos vêm do banco de dados.</p>
+    <div class="notice">
+      Simulador educativo: os preços podem ter atraso e não representam necessariamente cotações em tempo real. Valores ausentes não serão substituídos por preços inventados.
     </div>
+    <div class="toolbar">
+      <input id="search" type="search" placeholder="Buscar código ou empresa...">
+      <select id="exchange">
+        <option value="all">Todas as bolsas</option>
+        <option value="BR">Brasil · B3</option>
+        <option value="US">Estados Unidos</option>
+      </select>
+      <button id="btn-atualizar-mercado" class="primary" type="button">Atualizar lista</button>
+    </div>
+    <div id="mensagem-mercado" class="small" role="status">Carregando ativos...</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Ativo</th><th>Mercado</th><th>Cotação</th><th>Atualização</th></tr></thead>
+        <tbody id="assets"></tbody>
+      </table>
+    </div>
+    <div id="assetCount" class="small"></div>
+  </section>
 
-    <section id="market" class="section">
-      <h2>Mercado de ações</h2>
-      <p>Pesquise empresas brasileiras e americanas por seus códigos de negociação.</p>
+  <section id="portfolio" class="section hidden">
+    <h2>Minha carteira</h2>
+    <div class="empty">
+      <p>A conexão da carteira e das operações virtuais será concluída numa próxima etapa.</p>
+      <button class="primary" onclick="showPage('market')">Explorar ativos</button>
+    </div>
+  </section>
 
-      <div class="toolbar">
-        <input id="search" type="search" placeholder="Buscar código ou empresa...">
-        <select id="exchange">
-          <option value="all">Todas as bolsas</option>
-          <option value="BR">Brasil · B3</option>
-          <option value="US">Estados Unidos</option>
-        </select>
-        <button id="btn-atualizar-mercado" class="primary" type="button">
-          Atualizar preços
-        </button>
-      </div>
+  <section id="ranking" class="section hidden">
+    <h2>Ranking do clube</h2>
+    <p>O ranking público ainda precisa ser conectado à rodada ativa.</p>
+  </section>
 
-      <div id="mensagem-mercado" class="small" role="status">
-        Carregando preços salvos no banco de dados...
-      </div>
+  <section id="account" class="section hidden">
+    <h2>Minha conta</h2>
+    <div class="account-box">
+      <label for="email-clube">E-mail</label>
+      <input id="email-clube" type="email" autocomplete="email" placeholder="Seu e-mail">
+      <label for="senha-clube">Senha</label>
+      <input id="senha-clube" type="password" autocomplete="current-password" placeholder="Sua senha">
+      <button id="btn-cadastro-clube" class="primary" type="button">Criar conta</button>
+      <button id="btn-login-clube" class="secondary" type="button">Entrar na minha conta</button>
+      <button id="btn-sair-clube" class="secondary" type="button" hidden>Sair da conta</button>
+      <p id="mensagem-clube" role="status"></p>
+      <div id="saldo-real-clube"></div>
+    </div>
+  </section>
 
-      <div class="table-wrap">
-        <table>
-          <thead>
-            <tr>
-              <th>Ativo</th>
-              <th>Mercado</th>
-              <th>Cotação</th>
-              <th>Atualização</th>
-            </tr>
-          </thead>
-          <tbody id="assets"></tbody>
-        </table>
-      </div>
-      <div id="assetCount" class="small"></div>
-    </section>
+  <section id="painel-admin-clube" class="admin-box hidden">
+    <h2>Painel do administrador</h2>
+    <p>Configure o orçamento virtual de cada rodada mensal.</p>
+    <label for="admin-nome-rodada">Nome da rodada</label>
+    <input id="admin-nome-rodada" type="text" placeholder="Ex.: Rodada de novembro">
+    <label for="admin-inicio-rodada">Data de início</label>
+    <input id="admin-inicio-rodada" type="date">
+    <label for="admin-fim-rodada">Data de encerramento</label>
+    <input id="admin-fim-rodada" type="date">
+    <label for="admin-orcamento-rodada">Orçamento virtual por participante (R$)</label>
+    <input id="admin-orcamento-rodada" type="number" min="0.01" step="0.01" placeholder="Ex.: 500">
+    <button id="admin-criar-rodada" class="primary" type="button">Criar rodada em rascunho</button>
+    <p id="admin-mensagem-rodada" role="status"></p>
+    <div id="admin-lista-rodadas"></div>
+  </section>
+</main>
 
-    <section id="portfolio" class="section hidden">
-      <h2>Minha carteira</h2>
-      <div class="empty">
-        <p>A conexão da carteira e das operações virtuais será concluída numa próxima etapa.</p>
-        <button class="primary" onclick="showPage('market')">Explorar ativos</button>
-      </div>
-    </section>
+<footer>
+  Clube Invest Júnior · Educação financeira para jovens<br>
+  Simulação educativa. Nenhuma compra ou venda real de ativos é realizada.
+</footer>
 
-    <section id="ranking" class="section hidden">
-      <h2>Ranking do clube</h2>
-      <p>O ranking será conectado à rodada ativa numa próxima etapa.</p>
-    </section>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+  // Use apenas a chave PUBLICÁVEL do Supabase neste arquivo.
+  // Nunca coloque chaves secretas ou service_role no site.
+  const SUPABASE_URL = 'https://fpbnbmieqwjxozhhndvv.supabase.co';
+  const SUPABASE_KEY = 'sb_publishable_zBfaTBnIiodCGT8bZA2jNA_m4Ko317t';
 
-    <section id="account" class="section hidden">
-      <h2>Minha conta</h2>
+  const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-      <div class="account-box">
-        <label for="email-clube">E-mail</label>
-        <input id="email-clube" type="email" autocomplete="email" placeholder="Seu e-mail">
+  const knownAssets = [
+    {symbol:"PETR4",name:"Petrobras PN",market:"BR"},
+    {symbol:"PETR3",name:"Petrobras ON",market:"BR"},
+    {symbol:"VALE3",name:"Vale",market:"BR"},
+    {symbol:"ITUB4",name:"Itaú Unibanco",market:"BR"},
+    {symbol:"ITSA4",name:"Itaúsa",market:"BR"},
+    {symbol:"BBDC4",name:"Bradesco",market:"BR"},
+    {symbol:"BBAS3",name:"Banco do Brasil",market:"BR"},
+    {symbol:"WEGE3",name:"WEG",market:"BR"},
+    {symbol:"ABEV3",name:"Ambev",market:"BR"},
+    {symbol:"B3SA3",name:"B3",market:"BR"},
+    {symbol:"BPAC11",name:"BTG Pactual",market:"BR"},
+    {symbol:"RENT3",name:"Localiza",market:"BR"},
+    {symbol:"SUZB3",name:"Suzano",market:"BR"},
+    {symbol:"MGLU3",name:"Magazine Luiza",market:"BR"},
+    {symbol:"PRIO3",name:"PRIO",market:"BR"},
+    {symbol:"ELET3",name:"Eletrobras / Axia Energia",market:"BR"},
+    {symbol:"AXIA3",name:"Axia Energia",market:"BR"},
+    {symbol:"LREN3",name:"Lojas Renner",market:"BR"},
+    {symbol:"SBSP3",name:"Sabesp",market:"BR"},
+    {symbol:"RADL3",name:"RD Saúde",market:"BR"},
+    {symbol:"TOTS3",name:"TOTVS",market:"BR"},
+    {symbol:"EGIE3",name:"Engie Brasil",market:"BR"},
+    {symbol:"AAPL",name:"Apple",market:"US"},
+    {symbol:"MSFT",name:"Microsoft",market:"US"},
+    {symbol:"NVDA",name:"NVIDIA",market:"US"},
+    {symbol:"AMZN",name:"Amazon",market:"US"},
+    {symbol:"GOOGL",name:"Alphabet",market:"US"},
+    {symbol:"META",name:"Meta Platforms",market:"US"},
+    {symbol:"TSLA",name:"Tesla",market:"US"},
+    {symbol:"WMT",name:"Walmart",market:"US"},
+    {symbol:"KO",name:"Coca-Cola",market:"US"},
+    {symbol:"DIS",name:"Walt Disney",market:"US"}
+  ];
 
-        <label for="senha-clube">Senha</label>
-        <input id="senha-clube" type="password" autocomplete="current-password" placeholder="Sua senha">
+  const usSymbols = new Set(["AAPL","MSFT","NVDA","AMZN","GOOGL","META","TSLA","WMT","KO","DIS"]);
+  const tbody = document.getElementById("assets");
+  const search = document.getElementById("search");
+  const exchange = document.getElementById("exchange");
+  const mensagemMercado = document.getElementById("mensagem-mercado");
+  let cotacoesBanco = {};
+  let assets = [...knownAssets];
 
-        <button id="btn-cadastro-clube" class="primary" type="button">Criar conta</button>
-        <button id="btn-login-clube" class="secondary" type="button">Entrar na minha conta</button>
-        <button id="btn-sair-clube" class="secondary" type="button" hidden>Sair da conta</button>
+  function dinheiro(valor, moeda) {
+    const numero = Number(valor);
+    if (valor === null || valor === undefined || valor === "" || !Number.isFinite(numero)) return "—";
+    return numero.toLocaleString("pt-BR", {
+      style:"currency", currency:moeda || "BRL"
+    });
+  }
 
-        <p id="mensagem-clube" role="status"></p>
-        <div id="saldo-real-clube"></div>
-      </div>
-    </section>
+  function dataHora(valor) {
+    if (!valor) return "Sem registro";
+    const data = new Date(valor);
+    if (Number.isNaN(data.getTime())) return "Data indisponível";
+    return data.toLocaleString("pt-BR", {dateStyle:"short",timeStyle:"short"});
+  }
 
-    <section id="painel-admin-clube" class="admin-box hidden">
-      <h2>Painel do administrador</h2>
-      <p>Configure o orçamento virtual de cada rodada mensal.</p>
+  async function carregarCotacoesBanco() {
+    const botao = document.getElementById("btn-atualizar-mercado");
+    botao.disabled = true;
+    mensagemMercado.textContent = "Buscando ativos no Supabase...";
 
-      <label for="admin-nome-rodada">Nome da rodada</label>
-      <input id="admin-nome-rodada" type="text" placeholder="Ex.: Rodada de novembro">
+    try {
+      const {data,error} = await supabaseClient
+        .from("market_assets")
+        .select("symbol,name,price,updated_at")
+        .order("symbol");
 
-      <label for="admin-inicio-rodada">Data de início</label>
-      <input id="admin-inicio-rodada" type="date">
-
-      <label for="admin-fim-rodada">Data de encerramento</label>
-      <input id="admin-fim-rodada" type="date">
-
-      <label for="admin-orcamento-rodada">Orçamento virtual por participante (R$)</label>
-      <input id="admin-orcamento-rodada" type="number" min="0.01" step="0.01" placeholder="Ex.: 5000">
-
-      <button id="admin-criar-rodada" class="primary" type="button">
-        Criar rodada em rascunho
-      </button>
-
-      <p id="admin-mensagem-rodada" role="status"></p>
-      <div id="admin-lista-rodadas"></div>
-    </section>
-  </main>
-
-  <footer>
-    Clube Invest Júnior · Educação financeira para jovens<br>
-    Simulação educativa. Nenhuma compra ou venda real de ativos é realizada.
-  </footer>
-
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-  <script>
-    // Use aqui somente a chave PUBLICÁVEL do Supabase.
-    // Nunca coloque BRAPI_API_KEY, service_role ou COTACOES_CRON_SECRET neste arquivo.
-    const SUPABASE_URL = 'https://fpbnbmieqwjxozhhndvv.supabase.co';
-    const SUPABASE_KEY = 'sb_publishable_zBfaTBnIiodCGT8bZA2jNA_m4Ko317t';
-
-    const supabaseClient = window.supabase.createClient(
-      SUPABASE_URL,
-      SUPABASE_KEY
-    );
-
-    const assets = [
-      {symbol:"PETR4", name:"Petrobras", market:"BR"},
-      {symbol:"VALE3", name:"Vale", market:"BR"},
-      {symbol:"ITUB4", name:"Itaú Unibanco", market:"BR"},
-      {symbol:"BBDC4", name:"Bradesco", market:"BR"},
-      {symbol:"BBAS3", name:"Banco do Brasil", market:"BR"},
-      {symbol:"WEGE3", name:"WEG", market:"BR"},
-      {symbol:"ABEV3", name:"Ambev", market:"BR"},
-      {symbol:"B3SA3", name:"B3", market:"BR"},
-      {symbol:"RENT3", name:"Localiza", market:"BR"},
-      {symbol:"SUZB3", name:"Suzano", market:"BR"},
-      {symbol:"AAPL", name:"Apple", market:"US"},
-      {symbol:"MSFT", name:"Microsoft", market:"US"},
-      {symbol:"NVDA", name:"NVIDIA", market:"US"},
-      {symbol:"AMZN", name:"Amazon", market:"US"},
-      {symbol:"GOOGL", name:"Alphabet", market:"US"},
-      {symbol:"META", name:"Meta Platforms", market:"US"},
-      {symbol:"TSLA", name:"Tesla", market:"US"},
-      {symbol:"WMT", name:"Walmart", market:"US"},
-      {symbol:"KO", name:"Coca-Cola", market:"US"},
-      {symbol:"DIS", name:"Walt Disney", market:"US"}
-    ];
-
-    const tbody = document.getElementById('assets');
-    const search = document.getElementById('search');
-    const exchange = document.getElementById('exchange');
-    const mensagemMercado = document.getElementById('mensagem-mercado');
-
-    let cotacoesBanco = {};
-
-    function dinheiro(valor, moeda) {
-      if (typeof valor !== 'number' || !Number.isFinite(valor)) return '—';
-
-      return valor.toLocaleString('pt-BR', {
-        style: 'currency',
-        currency: moeda || 'BRL'
-      });
-    }
-
-    function dataHora(valor) {
-      if (!valor) return 'Sem registro';
-
-      const data = new Date(valor);
-      if (Number.isNaN(data.getTime())) return 'Data indisponível';
-
-      return data.toLocaleString('pt-BR', {
-        dateStyle: 'short',
-        timeStyle: 'short'
-      });
-    }
-
-    async function carregarCotacoesBanco() {
-      mensagemMercado.textContent = 'Buscando preços no Supabase...';
-
-      const { data, error } = await supabaseClient
-        .from('market_assets')
-        .select('symbol, name, price, updated_at');
-
-      if (error) {
-        mensagemMercado.textContent =
-          'Não foi possível ler as cotações do banco. Verifique as permissões de leitura da tabela market_assets.';
-        console.error('Erro ao carregar market_assets:', error);
-        renderAssets();
-        return;
-      }
+      if (error) throw error;
 
       cotacoesBanco = {};
+      const listaBanco = data || [];
 
-      (data || []).forEach(function(item) {
-        cotacoesBanco[String(item.symbol).toUpperCase()] = item;
+      listaBanco.forEach(item => {
+        const simbolo = String(item.symbol || "").trim().toUpperCase();
+        if (!simbolo) return;
+        cotacoesBanco[simbolo] = {...item,symbol:simbolo};
       });
 
-      const horarioMaisRecente = (data || [])
+      // Combina a lista conhecida com TODOS os símbolos que existirem no banco.
+      const mapa = new Map();
+      knownAssets.forEach(item => mapa.set(item.symbol,item));
+
+      listaBanco.forEach(item => {
+        const symbol = String(item.symbol || "").trim().toUpperCase();
+        if (!symbol) return;
+        const existente = mapa.get(symbol);
+        mapa.set(symbol,{
+          symbol,
+          name: item.name || (existente && existente.name) || symbol,
+          market: (existente && existente.market) || (usSymbols.has(symbol) ? "US" : "BR")
+        });
+      });
+
+      assets = Array.from(mapa.values()).sort((a,b) => a.symbol.localeCompare(b.symbol));
+
+      const horarioMaisRecente = listaBanco
         .map(item => item.updated_at)
         .filter(Boolean)
         .sort()
         .pop();
 
-      mensagemMercado.textContent = horarioMaisRecente
-        ? 'Preços lidos do banco. Registro mais recente: ' + dataHora(horarioMaisRecente) +
-          '. Os valores dependem da última atualização recebida.'
-        : 'Nenhuma cotação com horário de atualização foi encontrada.';
+      mensagemMercado.textContent = listaBanco.length
+        ? "Lista carregada do banco. Registro mais recente: " + dataHora(horarioMaisRecente) + "."
+        : "O banco não retornou ativos. Verifique as permissões da tabela market_assets.";
 
       renderAssets();
+    } catch (error) {
+      mensagemMercado.textContent =
+        "Erro ao carregar os ativos. Verifique a conexão e as permissões de leitura do Supabase.";
+      console.error("Erro ao carregar ativos:",error);
+      renderAssets();
+    } finally {
+      botao.disabled = false;
     }
+  }
 
-    function renderAssets() {
-      const query = search.value.toLowerCase().trim();
-      const mercado = exchange.value;
+  function renderAssets() {
+    const query = search.value.toLowerCase().trim();
+    const mercado = exchange.value;
 
-      const filtrados = assets.filter(function(asset) {
-        return (mercado === 'all' || asset.market === mercado) &&
-          (asset.symbol.toLowerCase().includes(query) ||
-           asset.name.toLowerCase().includes(query));
-      });
+    const filtrados = assets.filter(asset =>
+      (mercado === "all" || asset.market === mercado) &&
+      (asset.symbol.toLowerCase().includes(query) ||
+       asset.name.toLowerCase().includes(query) ||
+       String(cotacoesBanco[asset.symbol]?.name || "").toLowerCase().includes(query))
+    );
 
-      tbody.replaceChildren();
+    tbody.replaceChildren();
 
-      filtrados.forEach(function(asset) {
-        const tr = document.createElement('tr');
-        const tdAtivo = document.createElement('td');
-        const codigo = document.createElement('div');
-        const nome = document.createElement('div');
+    filtrados.forEach(asset => {
+      const cotacao = cotacoesBanco[asset.symbol];
+      const tr = document.createElement("tr");
+      const tdAtivo = document.createElement("td");
+      const codigo = document.createElement("div");
+      const nome = document.createElement("div");
 
-        codigo.className = 'symbol';
-        codigo.textContent = asset.symbol;
-        nome.className = 'company';
+      codigo.className = "symbol";
+      codigo.textContent = asset.symbol;
+      nome.className = "company";
+      nome.textContent = cotacao?.name || asset.name;
+      tdAtivo.append(codigo,nome);
 
-        const cotacao = cotacoesBanco[asset.symbol];
+      const tdMercado = document.createElement("td");
+      tdMercado.textContent = asset.market === "BR" ? "Brasil · B3" : "EUA";
 
-        nome.textContent = cotacao && cotacao.name
-          ? cotacao.name
-          : asset.name;
+      const tdPreco = document.createElement("td");
+      const preco = cotacao ? Number(cotacao.price) : NaN;
+      const precoValido = cotacao &&
+        cotacao.price !== null &&
+        cotacao.price !== undefined &&
+        cotacao.price !== "" &&
+        Number.isFinite(preco) &&
+        preco > 0;
 
-        tdAtivo.append(codigo, nome);
+      tdPreco.textContent = precoValido
+        ? dinheiro(preco,asset.market === "US" ? "USD" : "BRL")
+        : "Sem cotação válida";
 
-        const tdMercado = document.createElement('td');
-        tdMercado.textContent = asset.market === 'BR' ? 'Brasil · B3' : 'EUA';
+      const tdAtualizacao = document.createElement("td");
+      tdAtualizacao.textContent = cotacao
+        ? dataHora(cotacao.updated_at)
+        : "Aguardando cadastro";
 
-        const tdPreco = document.createElement('td');
-        const precoValido = cotacao &&
-          typeof cotacao.price === 'number' &&
-          Number.isFinite(cotacao.price);
-
-        tdPreco.textContent = precoValido
-          ? dinheiro(cotacao.price, asset.market === 'US' ? 'USD' : 'BRL')
-          : 'Sem cotação no banco';
-
-        const tdAtualizacao = document.createElement('td');
-        tdAtualizacao.textContent = cotacao
-          ? dataHora(cotacao.updated_at)
-          : 'Aguardando cadastro';
-
-        tr.append(tdAtivo, tdMercado, tdPreco, tdAtualizacao);
-        tbody.appendChild(tr);
-      });
-
-      document.getElementById('assetCount').textContent =
-        filtrados.length + ' ativos nesta lista inicial. ' +
-        Object.keys(cotacoesBanco).length +
-        ' registros de ativos encontrados no banco.';
-    }
-
-    function showPage(page) {
-      document.querySelectorAll('main section').forEach(function(section) {
-        section.classList.toggle('hidden', section.id !== page);
-      });
-
-      document.querySelectorAll('.tab').forEach(function(tab) {
-        tab.classList.toggle('active', tab.dataset.page === page);
-      });
-    }
-
-    document.querySelectorAll('.tab').forEach(function(tab) {
-      tab.addEventListener('click', function() {
-        showPage(tab.dataset.page);
-      });
+      tr.append(tdAtivo,tdMercado,tdPreco,tdAtualizacao);
+      tbody.appendChild(tr);
     });
 
-    search.addEventListener('input', renderAssets);
-    exchange.addEventListener('change', renderAssets);
+    document.getElementById("assetCount").textContent =
+      filtrados.length + " ativos nesta lista. " +
+      Object.keys(cotacoesBanco).length +
+      " símbolos encontrados no banco.";
+  }
 
-    document.getElementById('btn-atualizar-mercado')
-      .addEventListener('click', carregarCotacoesBanco);
+  function showPage(page) {
+    document.querySelectorAll("main section").forEach(section => {
+      section.classList.toggle("hidden",section.id !== page);
+    });
+    document.querySelectorAll(".tab").forEach(tab => {
+      tab.classList.toggle("active",tab.dataset.page === page);
+    });
+  }
 
-    const emailInput = document.getElementById('email-clube');
-    const senhaInput = document.getElementById('senha-clube');
-    const mensagemConta = document.getElementById('mensagem-clube');
-    const botaoCadastro = document.getElementById('btn-cadastro-clube');
-    const botaoLogin = document.getElementById('btn-login-clube');
-    const botaoSair = document.getElementById('btn-sair-clube');
+  document.querySelectorAll(".tab").forEach(tab => {
+    tab.addEventListener("click",() => showPage(tab.dataset.page));
+  });
+  search.addEventListener("input",renderAssets);
+  exchange.addEventListener("change",renderAssets);
+  document.getElementById("btn-atualizar-mercado")
+    .addEventListener("click",carregarCotacoesBanco);
 
-    function mostrarEstadoConta(conectado) {
-      botaoCadastro.hidden = conectado;
-      botaoLogin.hidden = conectado;
-      botaoSair.hidden = !conectado;
+  const emailInput = document.getElementById("email-clube");
+  const senhaInput = document.getElementById("senha-clube");
+  const mensagemConta = document.getElementById("mensagem-clube");
+  const botaoCadastro = document.getElementById("btn-cadastro-clube");
+  const botaoLogin = document.getElementById("btn-login-clube");
+  const botaoSair = document.getElementById("btn-sair-clube");
+
+  function mostrarEstadoConta(conectado) {
+    botaoCadastro.hidden = conectado;
+    botaoLogin.hidden = conectado;
+    botaoSair.hidden = !conectado;
+  }
+
+  async function carregarSaldoClube() {
+    const {data:sessaoData,error:sessaoErro} = await supabaseClient.auth.getSession();
+
+    if (sessaoErro || !sessaoData.session) {
+      document.getElementById("saldo-resumo").textContent = "Entre na conta";
+      document.getElementById("saldo-real-clube").textContent =
+        "Entre na sua conta para consultar seu saldo.";
+      return;
     }
 
-    async function carregarSaldoClube() {
-      const { data: sessaoData, error: sessaoErro } =
-        await supabaseClient.auth.getSession();
+    const usuario = sessaoData.session.user;
+    const {data:perfil,error} = await supabaseClient
+      .from("profiles")
+      .select("virtual_balance")
+      .eq("id",usuario.id)
+      .maybeSingle();
 
-      if (sessaoErro || !sessaoData.session) {
-        document.getElementById('saldo-resumo').textContent = 'Entre na conta';
-        document.getElementById('saldo-real-clube').textContent =
-          'Entre na sua conta para consultar seu saldo.';
-        return;
-      }
-
-      const usuario = sessaoData.session.user;
-
-      const { data: perfil, error } = await supabaseClient
-        .from('profiles')
-        .select('virtual_balance')
-        .eq('id', usuario.id)
-        .maybeSingle();
-
-      if (error || !perfil) {
-        document.getElementById('saldo-resumo').textContent = 'Indisponível';
-        document.getElementById('saldo-real-clube').textContent =
-          'Não foi possível carregar o perfil. O saldo da rodada será conectado separadamente.';
-        return;
-      }
-
-      const saldo = Number(perfil.virtual_balance);
-
-      document.getElementById('saldo-resumo').textContent =
-        Number.isFinite(saldo) ? dinheiro(saldo, 'BRL') : 'Indisponível';
-
-      document.getElementById('saldo-real-clube').textContent =
-        'Saldo do perfil: ' +
-        (Number.isFinite(saldo) ? dinheiro(saldo, 'BRL') : 'indisponível') +
-        '. Este valor não substitui o saldo de uma rodada ativa.';
+    if (error || !perfil) {
+      document.getElementById("saldo-resumo").textContent = "Indisponível";
+      document.getElementById("saldo-real-clube").textContent =
+        "Não foi possível carregar o perfil. Verifique o cadastro do perfil no banco.";
+      return;
     }
 
-    botaoCadastro.addEventListener('click', async function() {
-      const email = emailInput.value.trim();
-      const senha = senhaInput.value;
+    const saldo = Number(perfil.virtual_balance);
+    document.getElementById("saldo-resumo").textContent =
+      Number.isFinite(saldo) ? dinheiro(saldo,"BRL") : "Indisponível";
+    document.getElementById("saldo-real-clube").textContent =
+      "Saldo do perfil: " + (Number.isFinite(saldo) ? dinheiro(saldo,"BRL") : "indisponível") +
+      ". Este valor não substitui o saldo de uma rodada ativa.";
+  }
 
-      if (!email || !senha) {
-        mensagemConta.textContent = 'Preencha o e-mail e a senha.';
+  botaoCadastro.addEventListener("click",async function() {
+    const email = emailInput.value.trim();
+    const senha = senhaInput.value;
+
+    if (!email || !senha) {
+      mensagemConta.textContent = "Preencha o e-mail e a senha.";
+      return;
+    }
+    if (senha.length < 6) {
+      mensagemConta.textContent = "A senha precisa ter pelo menos 6 caracteres.";
+      return;
+    }
+
+    mensagemConta.textContent = "Criando sua conta...";
+    const {error} = await supabaseClient.auth.signUp({email,password:senha});
+    mensagemConta.textContent = error
+      ? "Erro no cadastro: " + error.message
+      : "Cadastro enviado! Se a confirmação por e-mail estiver ativada, confira sua caixa de entrada.";
+  });
+
+  botaoLogin.addEventListener("click",async function() {
+    const email = emailInput.value.trim();
+    const senha = senhaInput.value;
+
+    if (!email || !senha) {
+      mensagemConta.textContent = "Digite seu e-mail e sua senha.";
+      return;
+    }
+
+    mensagemConta.textContent = "Entrando...";
+    const {error} = await supabaseClient.auth.signInWithPassword({email,password:senha});
+
+    if (error) {
+      mensagemConta.textContent = "Erro ao entrar: " + error.message;
+      return;
+    }
+
+    mensagemConta.textContent = "Login realizado com sucesso!";
+    mostrarEstadoConta(true);
+    await carregarSaldoClube();
+    await iniciarPainelAdmin();
+  });
+
+  botaoSair.addEventListener("click",async function() {
+    const {error} = await supabaseClient.auth.signOut();
+
+    if (error) {
+      mensagemConta.textContent = "Não foi possível sair da conta.";
+      return;
+    }
+
+    mensagemConta.textContent = "Você saiu da sua conta.";
+    mostrarEstadoConta(false);
+    document.getElementById("saldo-resumo").textContent = "Entre na conta";
+    document.getElementById("saldo-real-clube").textContent = "";
+    document.getElementById("painel-admin-clube").classList.add("hidden");
+  });
+
+  async function iniciarPainelAdmin() {
+    const painel = document.getElementById("painel-admin-clube");
+    const {data,error} = await supabaseClient.auth.getSession();
+
+    if (error || !data.session) {
+      painel.classList.add("hidden");
+      return;
+    }
+
+    const {data:perfil,error:erroPerfil} = await supabaseClient
+      .from("profiles")
+      .select("role")
+      .eq("id",data.session.user.id)
+      .maybeSingle();
+
+    if (erroPerfil || perfil?.role !== "admin") {
+      painel.classList.add("hidden");
+      return;
+    }
+
+    painel.classList.remove("hidden");
+    await carregarRodadasAdmin();
+  }
+
+  document.getElementById("admin-criar-rodada")
+    .addEventListener("click",async function() {
+      const botao = this;
+      const mensagem = document.getElementById("admin-mensagem-rodada");
+      const nome = document.getElementById("admin-nome-rodada").value.trim();
+      const inicio = document.getElementById("admin-inicio-rodada").value;
+      const fim = document.getElementById("admin-fim-rodada").value;
+      const orcamento = Number(document.getElementById("admin-orcamento-rodada").value);
+
+      if (!nome || !inicio || !fim || !Number.isFinite(orcamento) || orcamento <= 0) {
+        mensagem.textContent = "Preencha todos os campos com valores válidos.";
+        return;
+      }
+      if (fim < inicio) {
+        mensagem.textContent = "A data final deve ser igual ou posterior à inicial.";
         return;
       }
 
-      if (senha.length < 6) {
-        mensagemConta.textContent = 'A senha precisa ter pelo menos 6 caracteres.';
-        return;
+      botao.disabled = true;
+      mensagem.textContent = "Criando rodada...";
+
+      try {
+        const {data,error} = await supabaseClient.rpc("criar_rodada_mensal",{
+          p_nome:nome,p_inicio:inicio,p_fim:fim,p_orcamento:orcamento
+        });
+        if (error) throw error;
+        mensagem.textContent = "Rascunho criado com sucesso. Identificador: " + data;
+        await carregarRodadasAdmin();
+      } catch (erro) {
+        mensagem.textContent = "Não foi possível criar: " + erro.message;
+      } finally {
+        botao.disabled = false;
       }
-
-      mensagemConta.textContent = 'Criando sua conta...';
-
-      const { error } = await supabaseClient.auth.signUp({
-        email: email,
-        password: senha
-      });
-
-      mensagemConta.textContent = error
-        ? 'Erro no cadastro: ' + error.message
-        : 'Cadastro enviado! Se a confirmação por e-mail estiver ativada, confira sua caixa de entrada.';
     });
 
-    botaoLogin.addEventListener('click', async function() {
-      const email = emailInput.value.trim();
-      const senha = senhaInput.value;
+  async function carregarRodadasAdmin() {
+    const lista = document.getElementById("admin-lista-rodadas");
+    const {data,error} = await supabaseClient
+      .from("monthly_rounds")
+      .select("id,name,start_date,end_date,starting_budget,status,created_at")
+      .order("created_at",{ascending:false});
 
-      if (!email || !senha) {
-        mensagemConta.textContent = 'Digite seu e-mail e sua senha.';
-        return;
-      }
+    lista.replaceChildren();
+    const titulo = document.createElement("h3");
+    titulo.textContent = "Rodadas do Clube";
+    lista.appendChild(titulo);
 
-      mensagemConta.textContent = 'Entrando...';
+    if (error) {
+      const aviso = document.createElement("p");
+      aviso.textContent = "Erro ao carregar rodadas: " + error.message;
+      lista.appendChild(aviso);
+      return;
+    }
 
-      const { error } = await supabaseClient.auth.signInWithPassword({
-        email: email,
-        password: senha
+    if (!data || data.length === 0) {
+      const aviso = document.createElement("p");
+      aviso.textContent = "Nenhuma rodada encontrada.";
+      lista.appendChild(aviso);
+      return;
+    }
+
+    data.forEach(rodada => {
+      const cartao = document.createElement("div");
+      cartao.className = "round-card";
+
+      const nome = document.createElement("h4");
+      nome.textContent = rodada.name;
+
+      const orcamento = document.createElement("p");
+      orcamento.textContent = "Orçamento por participante: " +
+        dinheiro(Number(rodada.starting_budget),"BRL");
+
+      const datas = document.createElement("p");
+      datas.textContent = "Período: " + rodada.start_date + " até " + rodada.end_date;
+
+      const status = document.createElement("p");
+      status.textContent = "Status: " + rodada.status;
+
+      const botaoRanking = document.createElement("button");
+      botaoRanking.className = "secondary";
+      botaoRanking.textContent = "Ver ranking";
+
+      botaoRanking.addEventListener("click",async function() {
+        botaoRanking.disabled = true;
+        try {
+          const {data:ranking,error:erroRanking} = await supabaseClient.rpc("ranking_rodada",{
+            p_rodada_id:rodada.id
+          });
+          if (erroRanking) throw erroRanking;
+
+          let resultado = cartao.querySelector(".resultado-ranking");
+          if (!resultado) {
+            resultado = document.createElement("pre");
+            resultado.className = "resultado-ranking";
+            resultado.style.cssText = "white-space:pre-wrap;overflow-wrap:anywhere;color:white;margin-top:12px;";
+            cartao.appendChild(resultado);
+          }
+
+          resultado.textContent = !ranking || ranking.length === 0
+            ? "Ainda não há participantes nesta rodada."
+            : ranking.map((p,i) =>
+                (i+1) + "º " + (p.username || "Participante") +
+                "\nPatrimônio: " + dinheiro(Number(p.patrimonio_total),"BRL") +
+                "\nResultado: " + dinheiro(Number(p.lucro_prejuizo),"BRL") +
+                "\nRentabilidade: " +
+                Number(p.rentabilidade_percentual).toLocaleString("pt-BR") + "%"
+              ).join("\n\n");
+        } catch (erro) {
+          alert("Não foi possível carregar o ranking: " + erro.message);
+        } finally {
+          botaoRanking.disabled = false;
+        }
       });
 
-      if (error) {
-        mensagemConta.textContent = 'Erro ao entrar: ' + error.message;
-        return;
-      }
+      const botaoAtivar = document.createElement("button");
+      botaoAtivar.className = "secondary";
+      botaoAtivar.style.marginLeft = "8px";
+      botaoAtivar.textContent = "Ativar rodada";
+      botaoAtivar.addEventListener("click",() => {
+        alert("A ativação permanece bloqueada enquanto terminamos os testes de segurança. Nenhuma rodada foi iniciada.");
+      });
 
-      mensagemConta.textContent = 'Login realizado com sucesso!';
-      mostrarEstadoConta(true);
+      cartao.append(nome,orcamento,datas,status,botaoRanking,botaoAtivar);
+      lista.appendChild(cartao);
+    });
+  }
+
+  async function iniciarSite() {
+    const {data,error} = await supabaseClient.auth.getSession();
+    if (error) console.error("Erro ao consultar sessão:",error);
+
+    const conectado = Boolean(data?.session);
+    mostrarEstadoConta(conectado);
+
+    if (conectado) {
+      mensagemConta.textContent = "Você já está conectado!";
       await carregarSaldoClube();
       await iniciarPainelAdmin();
-    });
-
-    botaoSair.addEventListener('click', async function() {
-      const { error } = await supabaseClient.auth.signOut();
-
-      if (error) {
-        mensagemConta.textContent = 'Não foi possível sair da conta.';
-        return;
-      }
-
-      mensagemConta.textContent = 'Você saiu da sua conta.';
-      mostrarEstadoConta(false);
-      document.getElementById('saldo-resumo').textContent = 'Entre na conta';
-      document.getElementById('painel-admin-clube').classList.add('hidden');
-    });
-
-    async function iniciarPainelAdmin() {
-      const painel = document.getElementById('painel-admin-clube');
-      const { data, error } = await supabaseClient.auth.getSession();
-
-      if (error || !data.session) {
-        painel.classList.add('hidden');
-        return;
-      }
-
-      const { data: perfil, error: erroPerfil } = await supabaseClient
-        .from('profiles')
-        .select('role')
-        .eq('id', data.session.user.id)
-        .maybeSingle();
-
-      if (erroPerfil || perfil?.role !== 'admin') {
-        painel.classList.add('hidden');
-        return;
-      }
-
-      painel.classList.remove('hidden');
-      await carregarRodadasAdmin();
     }
 
-    document.getElementById('admin-criar-rodada')
-      .addEventListener('click', async function() {
-        const botao = this;
-        const mensagem = document.getElementById('admin-mensagem-rodada');
+    await carregarCotacoesBanco();
+  }
 
-        const nome = document.getElementById('admin-nome-rodada').value.trim();
-        const inicio = document.getElementById('admin-inicio-rodada').value;
-        const fim = document.getElementById('admin-fim-rodada').value;
-        const orcamento = Number(
-          document.getElementById('admin-orcamento-rodada').value
-        );
+  iniciarSite();
 
-        if (!nome || !inicio || !fim ||
-            !Number.isFinite(orcamento) || orcamento <= 0) {
-          mensagem.textContent = 'Preencha todos os campos com valores válidos.';
-          return;
-        }
-
-        if (fim < inicio) {
-          mensagem.textContent = 'A data final deve ser igual ou posterior à inicial.';
-          return;
-        }
-
-        botao.disabled = true;
-        mensagem.textContent = 'Criando rodada...';
-
-        try {
-          const { data, error } = await supabaseClient.rpc(
-            'criar_rodada_mensal',
-            {
-              p_nome: nome,
-              p_inicio: inicio,
-              p_fim: fim,
-              p_orcamento: orcamento
-            }
-          );
-
-          if (error) throw error;
-
-          mensagem.textContent =
-            'Rascunho criado com sucesso. Identificador: ' + data;
-
-          await carregarRodadasAdmin();
-        } catch (erro) {
-          mensagem.textContent = 'Não foi possível criar: ' + erro.message;
-        } finally {
-          botao.disabled = false;
-        }
-      });
-
-    async function carregarRodadasAdmin() {
-      const lista = document.getElementById('admin-lista-rodadas');
-
-      const { data, error } = await supabaseClient
-        .from('monthly_rounds')
-        .select('id, name, start_date, end_date, starting_budget, status, created_at')
-        .order('created_at', { ascending: false });
-
-      lista.replaceChildren();
-
-      const titulo = document.createElement('h3');
-      titulo.textContent = 'Rodadas do Clube';
-      lista.appendChild(titulo);
-
-      if (error) {
-        const aviso = document.createElement('p');
-        aviso.textContent = 'Erro ao carregar rodadas: ' + error.message;
-        lista.appendChild(aviso);
-        return;
-      }
-
-      if (!data || data.length === 0) {
-        const aviso = document.createElement('p');
-        aviso.textContent = 'Nenhuma rodada encontrada.';
-        lista.appendChild(aviso);
-        return;
-      }
-
-      data.forEach(function(rodada) {
-        const cartao = document.createElement('div');
-        cartao.className = 'round-card';
-
-        const nome = document.createElement('h4');
-        nome.textContent = rodada.name;
-
-        const orcamento = document.createElement('p');
-        orcamento.textContent = 'Orçamento por participante: ' +
-          dinheiro(Number(rodada.starting_budget), 'BRL');
-
-        const datas = document.createElement('p');
-        datas.textContent = 'Período: ' + rodada.start_date +
-          ' até ' + rodada.end_date;
-
-        const status = document.createElement('p');
-        status.textContent = 'Status: ' + rodada.status;
-
-        const botaoRanking = document.createElement('button');
-        botaoRanking.className = 'secondary';
-        botaoRanking.textContent = 'Ver ranking';
-
-        botaoRanking.addEventListener('click', async function() {
-          botaoRanking.disabled = true;
-          botaoRanking.textContent = 'Carregando...';
-
-          try {
-            const { data: ranking, error: erroRanking } =
-              await supabaseClient.rpc('ranking_rodada', {
-                p_rodada_id: rodada.id
-              });
-
-            if (erroRanking) throw erroRanking;
-
-            let resultado = cartao.querySelector('.resultado-ranking');
-
-            if (!resultado) {
-              resultado = document.createElement('pre');
-              resultado.className = 'resultado-ranking';
-              resultado.style.cssText =
-                'white-space:pre-wrap;overflow-wrap:anywhere;color:white;margin-top:12px;';
-              cartao.appendChild(resultado);
-            }
-
-            resultado.textContent = !ranking || ranking.length === 0
-              ? 'Ainda não há participantes nesta rodada.'
-              : ranking.map(function(p, i) {
-                  return (i + 1) + 'º ' + (p.username || 'Participante') +
-                    '\nPatrimônio: ' + dinheiro(Number(p.patrimonio_total), 'BRL') +
-                    '\nResultado: ' + dinheiro(Number(p.lucro_prejuizo), 'BRL') +
-                    '\nRentabilidade: ' +
-                    Number(p.rentabilidade_percentual).toLocaleString('pt-BR') + '%';
-                }).join('\n\n');
-          } catch (erro) {
-            alert('Não foi possível carregar o ranking: ' + erro.message);
-          } finally {
-            botaoRanking.disabled = false;
-            botaoRanking.textContent = 'Ver ranking';
-          }
-        });
-
-        const botaoAtivar = document.createElement('button');
-        botaoAtivar.className = 'secondary';
-        botaoAtivar.style.marginLeft = '8px';
-        botaoAtivar.textContent = 'Ativar rodada';
-        botaoAtivar.addEventListener('click', function() {
-          alert('A ativação continua bloqueada enquanto terminamos os testes de segurança. Nenhuma rodada foi iniciada.');
-        });
-
-        cartao.append(nome, orcamento, datas, status, botaoRanking, botaoAtivar);
-        lista.appendChild(cartao);
-      });
-    }
-
-    async function iniciarSite() {
-      const { data } = await supabaseClient.auth.getSession();
-      const conectado = Boolean(data.session);
-
-      mostrarEstadoConta(conectado);
-
-      if (conectado) {
-        mensagemConta.textContent = 'Você já está conectado!';
-        await carregarSaldoClube();
-        await iniciarPainelAdmin();
-      }
-
-      await carregarCotacoesBanco();
-    }
-
-    iniciarSite();
-
-    // Atualiza a leitura do banco periodicamente.
-    // Isso NÃO solicita uma nova cotação à Brapi.
-    setInterval(carregarCotacoesBanco, 60000);
-  </script>
+  // Recarrega os dados do banco a cada minuto.
+  // Isso não solicita novas cotações à API; o cron atualiza os preços no servidor.
+  setInterval(carregarCotacoesBanco,60000);
+</script>
 </body>
 </html>
